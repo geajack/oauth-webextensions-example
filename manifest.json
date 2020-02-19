@@ -11,6 +11,7 @@
     "description": "...",
     "permissions": [
         "https://www.googleapis.com/drive/*",
+        "https://oauth2.googleapis.com/*",
         "identity"
     ],
     "options_ui": {
