@@ -23,8 +23,8 @@ async function main()
     }
 
     let response = await fetch(
+        "https://oauth2.googleapis.com/token",
         {
-            url: "https://oauth2.googleapis.com/token",
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(
@@ -38,7 +38,8 @@ async function main()
             )
         }
     );
-    let body = await response.json();
+    let responseJSON = await response.json();
+    console.log(responseJSON);
 }
 
 main();
