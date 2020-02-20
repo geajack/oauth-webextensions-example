@@ -12,7 +12,8 @@
     "permissions": [
         "https://www.googleapis.com/drive/*",
         "https://oauth2.googleapis.com/*",
-        "identity"
+        "identity",
+        "storage"
     ],
     "options_ui": {
         "page": "options/index.html",
