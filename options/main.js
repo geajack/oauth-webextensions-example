@@ -8,9 +8,10 @@ class RootController
         this.message.addEventListener("change", this.onChange.bind(this));
     }
 
-    onChange()
+    async onChange()
     {
         let value = this.message.value;
+        await drive.setData(value);
     }
 }
 
@@ -42,6 +43,15 @@ async function initialize()
     let controller = vb.bind(document.body, RootController, [UserInfoWidget], []);
 
     let userInfo = await drive.getUserInfo();
+
+    if (! await drive.isUserLoggedIn())
+    {
+        await drive.logIn();
+    }
+
+    let storedData = await drive.getData();
+
+    controller.message.value = storedData;
 
     controller.userInfo.setUser(userInfo);
 }

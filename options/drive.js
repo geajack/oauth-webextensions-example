@@ -1,8 +1,7 @@
 const clientID = "988121232658-586ahfanse4cgjmjk6fdtvpo5glmi1ul.apps.googleusercontent.com";
 const redirectURL = browser.identity.getRedirectURL();
 
-let scopes = "https://www.googleapis.com/auth/drive";
-scopes += " https://www.googleapis.com/auth/drive.appdata";
+let scopes = "https://www.googleapis.com/auth/drive.appdata";
 scopes += " https://www.googleapis.com/auth/userinfo.email";
 scopes += " https://www.googleapis.com/auth/userinfo.profile";
 
@@ -88,23 +87,78 @@ export async function getData()
         await requestAuthorization(false);
     }
 
-    let url = "https://www.googleapis.com/drive/v3/files";
-    url += "?spaces=appDataFolder";
-    url += "&access_token=" + accessToken;
+    let fileId;
+    {
+        let url = "https://www.googleapis.com/drive/v3/files";
+        url += "?spaces=appDataFolder";
+        url += "&access_token=" + accessToken;
 
-    let response = await fetch(url);
-    let responseJson = await response.json();
-    let files = responseJson.files;
+        let response = await fetch(url);
+        let responseJson = await response.json();
+        let files = responseJson.files;
 
-    console.log("Got file:", files[0]);
+        fileId = files[0].id;
+
+        console.log(files[0]);
+    }
+
+    {
+        let url = "https://www.googleapis.com/drive/v3/files";
+        url += "/" + fileId;
+        url += "?alt=media";
+
+        let response = await fetch(
+            url,
+            {
+                headers: {
+                    "Authorization": "Bearer " + accessToken
+                }
+            }
+        );
+
+        return await response.text();
+    }    
 }
 
-export async function setData()
+export async function setData(value)
 {
     if (accessToken === null)
     {
         await requestAuthorization(false);
     }
 
-    console.log("Called setData()");
+    let fileId;
+    {
+        let url = "https://www.googleapis.com/drive/v3/files";
+        url += "?spaces=appDataFolder";
+        url += "&access_token=" + accessToken;
+
+        let response = await fetch(url);
+        let responseJson = await response.json();
+        let files = responseJson.files;
+
+        fileId = files[0].id;
+
+        console.log(files[0]);
+    }
+
+    {
+        let url = "https://www.googleapis.com/upload/drive/v3/files";
+        url += "/" + fileId;
+        url += "?access_token=" + accessToken;
+        url += "&uploadType=media";
+
+        let response = await fetch(
+            url,
+            {
+                method: "PATCH",
+                headers: {
+                    "Content-Type": "text/plain"
+                },
+                body: value
+            }
+        );
+
+        console.log(await response.json());
+    }
 }
