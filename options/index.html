@@ -4,9 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>OAuth Example</title>
-    <script src="main.js" defer></script>
+    <script src="main.js" type="module" defer></script>
     <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+    <input bind="message" autocomplete="off" placeholder="Enter message" />
+    <div class="userInfoContainer" bind="userInfo" controller="UserInfoWidget">
+        <span bind="noUserMessage">You are not logged in.</span>
+        <div class="userInfo" bind="userInfo">
+            <span class="title">Logged in as:</span>
+            <img bind="avatar" />
+            <span bind="name"></span>
+            <span bind="email"></span>
+        </div>
+    </div>
+    <button>Set Account</button>
 </body>
 </html>

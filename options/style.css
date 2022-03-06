@@ -1,8 +1,83 @@
-textarea {
-    margin: auto;
-    width: 800px;
-    display: block;
+body
+{
+    font-family: sans-serif;
     text-align: center;
-    font-size: 24pt;
-    resize: none;
+    padding-top: 50px;
+}
+
+.userInfoContainer
+{
+    width: 300px;
+    height: 150px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    vertical-align: middle;
+}
+
+input
+{
+    display: block;
+    margin: auto;
+    font-size: 60px;
+    width: 600px;
+    text-align: center;
+    font-family: inherit;
+}
+
+button
+{
+    display: inline;
+    vertical-align: middle;
+}
+
+.userInfoContainer > span
+{
+}
+
+.userInfo
+{
+    display: grid;
+    grid-template-columns: fit-content(80px) fit-content(150px);
+    grid-template-rows: 1fr 1fr 1fr;
+
+    font-size: 10pt;
+    margin: auto;
+}
+
+.userInfo .title
+{
+    grid-column-start: 1;
+    grid-column-end: 3;
+    grid-row: 1;
+    font-weight: bold;
+}
+
+.userInfo img
+{
+    height: 50px;
+    width: 50px;
+    border-radius: 25px;
+
+    align-self: center;
+    grid-column: 1;
+    grid-row-start: 2;
+    grid-row-end: 4;
+
+    margin-right: 10px;
+}
+
+span[bind="name"]
+{
+    align-self: center;
+    grid-column: 2;
+    grid-row: 2;
+}
+
+span[bind="email"]
+{
+    align-self: start;
+    color: grey;
+    grid-column: 2;
+    grid-row: 3;
 }
